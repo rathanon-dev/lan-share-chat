@@ -141,3 +141,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+# 🗃️ Local Database
+lan_share.db
+lan_share.db-journal

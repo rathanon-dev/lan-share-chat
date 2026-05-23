@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LAN File Share & Realtime Chat</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>LAN File Share & Realtime Chat</h2>
+        <div id="alert-box" class="alert-box">⚠️ ตรวจพบการเปิดแอปพลิเคชันนี้ซ้อนกันหลายแท็บในเครื่องนี้
+            ระบบการส่งไฟล์อาจทำงานไม่ถูกต้อง</div>
+
+        <div class="my-info">
+            <span id="my-identity">กำลังโหลดข้อมูล...</span>
+            <button class="btn-rename" onclick="openRenameModal()">เปลี่ยนชื่อเล่น</button>
+        </div>
+
+        <div class="section-panel">
+            <div class="section-title">📁 โซนส่งไฟล์ผ่านเครือข่ายภายใน (LAN SHARE)</div>
+            <div class="online-count" style="font-size: 13px; color: #65676b; margin-bottom: 8px; font-weight: 600;">
+                อุปกรณ์ที่ออนไลน์อยู่ตอนนี้: <span id="online-counter">0</span> เครื่อง</div>
+            <div id="peers-container"></div>
+        </div>
+
+        <hr class="zone-divider">
+
+        <div class="section-panel" style="border: none; padding: 0; margin-bottom: 0;">
+            <div class="section-title" style="padding-left: 4px;">💬 ห้องสนทนากลุ่ม REALTIME CHAT</div>
+            <div id="chat-box" class="chat-box"></div>
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <input type="text" id="chat-input-field" placeholder="พิมพ์ข้อความที่ต้องการแชท..."
+                        oninput="updateCharCounter()">
+                    <div id="char-counter" class="char-counter">0 / --</div>
+                </div>
+                <button class="btn-send" onclick="sendGroupChatMessage()">ส่ง</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="name-modal-overlay" class="custom-modal-overlay">
+        <div class="custom-modal">
+            <div class="modal-title">ตั้งชื่อเล่นใหม่ของคุณ</div>
+            <div class="modal-input-wrapper">
+                <input type="text" id="modal-name-input" class="modal-input" placeholder="พิมพ์ชื่อเล่น..."
+                    oninput="updateModalCharCounter()">
+                <div id="modal-name-counter" class="modal-counter">0 / --</div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeRenameModal()">ยกเลิก</button>
+                <button class="modal-btn modal-btn-save" onclick="saveDisplayNameFromModal()">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="file-modal-overlay" class="custom-modal-overlay">
+        <div class="custom-modal" style="max-width: 420px; text-align: center;">
+            <div id="file-modal-icon" style="font-size: 40px; margin-bottom: 12px;">📁</div>
+            <div id="file-modal-title" class="modal-title" style="margin-bottom: 8px;">คำขอรับ-ส่งไฟล์</div>
+            <p id="file-modal-body"
+                style="font-size: 14px; color: #4f5154; margin: 0 0 20px 0; line-height: 1.5; word-break: break-all;">
+            </p>
+
+            <div id="file-progress-container" style="display: none; margin-bottom: 20px; text-align: left;">
+                <div
+                    style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #0084ff;">
+                    <span id="file-progress-status">กำลังประมวลผล...</span>
+                    <span id="file-progress-percent">0%</span>
+                </div>
+                <div style="width: 100%; height: 10px; background: #e4e6eb; border-radius: 5px; overflow: hidden;">
+                    <div id="file-progress-bar"
+                        style="width: 0%; height: 100%; background: linear-gradient(90deg, #0084ff, #00c6ff); transition: width 0.1s ease;">
+                    </div>
+                </div>
+            </div>
+
+            <div id="file-modal-actions" class="modal-actions" style="justify-content: center; gap: 16px;">
+                <button id="file-btn-reject" class="modal-btn modal-btn-cancel"
+                    style="padding: 10px 24px;">ปฏิเสธ</button>
+                <button id="file-btn-accept" class="modal-btn modal-btn-save"
+                    style="padding: 10px 24px; background: #28a745;">ยอมรับ</button>
+                <button id="file-btn-close" class="modal-btn modal-btn-cancel"
+                    style="display: none; padding: 10px 24px;">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
